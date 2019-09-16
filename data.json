@@ -1,6 +1,44 @@
 {
     "folder": "~/Projects/competitive-programming",
     "sources": {
+        "codeforces.com": {
+            "username": "FedericoS",
+            "max_page": {
+                "url": "https://codeforces.com/submissions/__username__",
+                "js":{
+                    "max_page": "$(\".page-index\").last().text()"
+                }
+
+            },
+            "solved_problems": {
+                "url": "",
+                "is_one_skipped": "",
+                "js":{
+                    "get_elements_number": "",
+                    "id": ""
+                }
+
+            },
+            "submissions_per_page": {
+                "url": "https://codeforces.com/submissions/__username__/page/__page_id__",
+                "page_one_url": "https://codeforces.com/submissions/__username__",
+                "js": {
+                    "get_elements_number": "$(\".id-cell\").length",
+                    "id": "$(\".id-cell\").eq(0).children().eq(0).attr(\"href\")",
+                    "name": "$(\"[data-submission-id]\").eq(__element__).children().eq(3).children().eq(0).attr(\"href\").replace(\"/contest/\",\"\").replace(\"/problem/\",\"\")",
+                    "time": "(new Date($(\"[data-submission-id]\").eq(__element__).children().eq(1).text().split(\"UTC\")[0].trim())).getTime()",
+                    "solved": "$(\".status-verdict-cell\").eq(__element__).text().trim() == \"Accepted\""
+                }
+            },
+            "code":{
+                "url": "https://codeforces.com__problem_id__",
+                "js":{
+                    "lines_number": "$(\"#program-source-text\").find(\"li\").length",
+                    "line": "$(\"#program-source-text\").find(\"li\").eq(__element__).text()",
+                    "extension": "\".cpp\""
+                }
+            }
+        },
         "codechef.com": {
             "username": "federico_s",
             "max_page": {
@@ -27,41 +65,6 @@
                     "time": "0",
                     "solved": "$(\"tbody\").eq(2).children().eq(__element__).children().eq(3).children().eq(0).attr(\"title\") == \"accepted\""
                 }
-            },
-            "get_submission_info":{
-                "TODO": "use if you can't get time and solved when getting id (maybe (and hopefully) useles)"
-            }
-        },
-        "codeforces.com": {
-            "username": "FedericoS",
-            "max_page": {
-                "url": "https://codeforces.com/submissions/__username__",
-                "js":{
-                    "max_page": "$(\".page-index\").last().text()"
-                }
-
-            },
-            "solved_problems": {
-                "url": "",
-                "is_one_skipped": "",
-                "js":{
-                    "get_elements_number": "",
-                    "id": ""
-                }
-
-            },
-            "submissions_per_page": {
-                "url": "https://codeforces.com/submissions/__username__/page/__page_id__",
-                "page_one_url": "https://codeforces.com/submissions/__username__",
-                "js": {
-                    "get_elements_number": "$(\".id-cell\").length",
-                    "id": "$(\".id-cell\").eq(__element__).text().trim()",
-                    "time": "(new Date($(\"[data-submission-id]\").eq(__element__).children().eq(1).text().split(\"UTC\")[0].trim())).getTime()",
-                    "solved": "$(\".status-verdict-cell\").eq(__element__).text().trim() == \"Accepted\""
-                }
-            },
-            "get_submission_info":{
-                "TODO": "use if you can't get time and solved when getting id (maybe (and hopefully) useles)"
             }
         }
     }

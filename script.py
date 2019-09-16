@@ -42,12 +42,8 @@ def get_elements(url, js):
     except:
         print("exception")
         close_all()
-        time.sleep(20)
+        time.sleep(1)
         return get_elements(url, js)
-        driver_headed = webdriver.Firefox(options=options_headed)
-        driver_headed[url].get(url)
-        driver_headed.close()
-        return driver[url].execute_script("return "+js)
 
 def max_page(params, username):
     if params["url"]:
@@ -71,6 +67,7 @@ def submissions_per_page(params, username, page_id):
 
         v.append({\
             "id": get_elements(url, js["id"].replace("__element__", str(i))),\
+            "name": get_elements(url, js["name"].replace("__element__", str(i))),\
             "time": get_elements(url, js["time"].replace("__element__", str(i))),\
             "solved": get_elements(url, js["solved"].replace("__element__", str(i)))\
         })
@@ -89,7 +86,7 @@ def solved_problems(params, username):
 
     return v #gets ids of solved problem
 
-def all_submissions(source, username, max_page):
+def all_submissions(params, username, max_page):
 
     if source["solved_problems"]["url"]:
         page_ids = solved_problems(source["solved_problems"], username)
@@ -102,13 +99,52 @@ def all_submissions(source, username, max_page):
         v.extend(submissions_per_page(params, username, str(page_id)))
     return v
 
+def good_submissions(submissions):
+
+    taken = {}
+    v = []
+    for s in submissions:
+        if s["solved"] and s["name"] not in taken:
+            taken[s["name"]] = True
+            v.append(s)
+
+    return v
+
+def code(params, problem):
+
+    url = params["url"].replace("__problem_id__", problem["id"])
+    js = params["js"]
+    lines_number = int(get_elements(url, js["lines_number"]))
+    code = []
+
+    for i in range(lines_number):
+        code.append(get_elements(url, js["line"].replace("__element__", str(i))))
+
+    return {\
+        "name": problem["name"]+get_elements(url, js["extension"]),\
+        "code": ("\n").join(code)\
+    }
+
+def all_codes(params, problems, folder):
+
+    for p in problems:
+        x = code(params, p)
+        file = open(folder+"/"+x["name"], "w")
+        file.write(x["code"])
+        file.close()
+
+    close_all()
+
 for source_name in data["sources"]:
 
     source = data["sources"][source_name]
     username = source["username"]
 
     l = all_submissions(source, username, max_page(source["max_page"], username))
-    for x in l:
-        print(x)
+    print(l)
+    print(good_submissions(l))
+    exit(0)
+
+    all_codes(source["code"], good_submissions(all_submissions(source, username, max_page(source["max_page"], username))), "test")
 
     exit(0)
