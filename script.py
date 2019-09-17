@@ -1,8 +1,10 @@
 import json
+import os
+import time
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 
-import time
+SLEEP_TIME = 3
 
 f = open('data.json', 'r')
 data = json.loads(f.read())
@@ -11,9 +13,6 @@ f.close()
 options = Options()
 options.headless = True
 driver = {}
-
-options_headed = Options()
-options_headed.headless = False
 
 def close_all():
     global drive
@@ -32,17 +31,18 @@ def limit_browsers():
 def get_elements(url, js):
 
     if url not in driver:
-        limit_browsers()
+        if len(driver):
+            close_all()
         driver[url] = webdriver.Firefox(options=options)
         driver[url].get(url)
-        print("Downloaded "+url)
+        print("downloaded "+url)
 
     try:
         return driver[url].execute_script("return "+js)
     except:
         print("exception")
         close_all()
-        time.sleep(1)
+        time.sleep(SLEEP_TIME)
         return get_elements(url, js)
 
 def max_page(params, username):
@@ -101,6 +101,9 @@ def all_submissions(params, username, max_page):
 
 def good_submissions(submissions):
 
+    for x in submissions:
+        print(x)
+
     taken = {}
     v = []
     for s in submissions:
@@ -110,25 +113,29 @@ def good_submissions(submissions):
 
     return v
 
-def code(params, problem):
+def code(params, problem, username):
 
-    url = params["url"].replace("__problem_id__", problem["id"])
+    url = params["url"].replace("__problem_id__", problem["id"]).replace("__username__", username)
     js = params["js"]
     lines_number = int(get_elements(url, js["lines_number"]))
-    code = []
+    code_lines = []
 
     for i in range(lines_number):
-        code.append(get_elements(url, js["line"].replace("__element__", str(i))))
+        code_lines.append(get_elements(url, js["line"].replace("__element__", str(i))))
 
     return {\
         "name": problem["name"]+get_elements(url, js["extension"]),\
-        "code": ("\n").join(code)\
+        "code": ("\n").join(code_lines)\
     }
 
 def all_codes(params, problems, folder):
 
+    folder = os.path.expanduser(folder)
+    if not os.path.exists(folder):
+        os.mkdir(folder)
+
     for p in problems:
-        x = code(params, p)
+        x = code(params, p, username)
         file = open(folder+"/"+x["name"], "w")
         file.write(x["code"])
         file.close()
@@ -139,12 +146,9 @@ for source_name in data["sources"]:
 
     source = data["sources"][source_name]
     username = source["username"]
+    folder = data["folder"]
 
-    l = all_submissions(source, username, max_page(source["max_page"], username))
-    print(l)
-    print(good_submissions(l))
-    exit(0)
+    if username == "":
+        continue
 
-    all_codes(source["code"], good_submissions(all_submissions(source, username, max_page(source["max_page"], username))), "test")
-
-    exit(0)
+    all_codes(source["code"], good_submissions(all_submissions(source, username, max_page(source["max_page"], username))), folder+source_name)

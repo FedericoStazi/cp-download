@@ -1,7 +1,7 @@
 {
-    "folder": "~/Projects/competitive-programming",
+    "folder": "~/Projects/competitive-programming/",
     "sources": {
-        "codeforces.com": {
+        "codeforces": {
             "username": "FedericoS",
             "max_page": {
                 "url": "https://codeforces.com/submissions/__username__",
@@ -12,7 +12,6 @@
             },
             "solved_problems": {
                 "url": "",
-                "is_one_skipped": "",
                 "js":{
                     "get_elements_number": "",
                     "id": ""
@@ -24,7 +23,7 @@
                 "page_one_url": "https://codeforces.com/submissions/__username__",
                 "js": {
                     "get_elements_number": "$(\".id-cell\").length",
-                    "id": "$(\".id-cell\").eq(0).children().eq(0).attr(\"href\")",
+                    "id": "$(\".id-cell\").eq(__element__).children().eq(0).attr(\"href\")",
                     "name": "$(\"[data-submission-id]\").eq(__element__).children().eq(3).children().eq(0).attr(\"href\").replace(\"/contest/\",\"\").replace(\"/problem/\",\"\")",
                     "time": "(new Date($(\"[data-submission-id]\").eq(__element__).children().eq(1).text().split(\"UTC\")[0].trim())).getTime()",
                     "solved": "$(\".status-verdict-cell\").eq(__element__).text().trim() == \"Accepted\""
@@ -39,7 +38,7 @@
                 }
             }
         },
-        "codechef.com": {
+        "codechef": {
             "username": "federico_s",
             "max_page": {
                 "url": "",
@@ -52,18 +51,27 @@
                 "url": "https://www.codechef.com/users/__username__",
                 "js":{
                     "get_elements_number": "$(\"h5\").eq(0).text().slice(14,-1)",
-                    "id": "$(\"article\").eq(0).children().children().children().eq(__element__).text()"
+                    "id": "$(\"article\").eq(0).children().children().children().eq(__element__).attr(\"href\")"
                 }
 
             },
             "submissions_per_page": {
-                "url": "https://www.codechef.com/status/__page_id__,__username__",
+                "url": "https://www.codechef.com__page_id__",
                 "page_one_url": "",
                 "js": {
                     "get_elements_number": "$(\"tbody\").eq(2).children().length",
                     "id": "$(\"tbody\").eq(2).children().eq(__element__).children().eq(0).text()",
+                    "name": "$(\"h2\").eq(1).children().eq(1).text()",
                     "time": "0",
-                    "solved": "$(\"tbody\").eq(2).children().eq(__element__).children().eq(3).children().eq(0).attr(\"title\") == \"accepted\""
+                    "solved": "$(\"tbody\").eq(2).children().eq(__element__).children().eq(3).children().eq(0).children().eq(0).attr(\"src\") == \"/misc/tick-icon.gif\""
+                }
+            },
+            "code":{
+                "url": "https://www.codechef.com/viewsolution/__problem_id__",
+                "js":{
+                    "lines_number": "$(\".ace_line\").length",
+                    "line": "$(\".ace_line\").eq(__element__).text()",
+                    "extension": "\".cpp\""
                 }
             }
         }
