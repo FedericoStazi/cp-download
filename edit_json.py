@@ -141,8 +141,8 @@ while True:
 #judge.u-aizu.ac.jp
 
 ## TODO:
+# cooler prints
+
 # pass data always as functions' parameter
-# add skip & retry functions
-# remove default return
 # cooler replace function
 # remove close_all

@@ -38,7 +38,7 @@ def get_elements(url, js):
         print("downloaded "+url)
 
     try:
-        return driver[url].execute_script("return "+js)
+        return driver[url].execute_script(js)
     except:
         print("exception")
         close_all()

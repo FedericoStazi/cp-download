@@ -1,12 +1,12 @@
 {
-    "folder": "~/Projects/competitive-programming/",
+    "folder": "~/Projects/Cpd-test/",
     "sources": {
-        "codeforces": {
-            "username": "FedericoS",
+        "TEMPLATE": {
+            "username": "",
             "max_page": {
-                "url": "https://codeforces.com/submissions/__username__",
+                "url": "",
                 "js":{
-                    "max_page": "$(\".page-index\").last().text()"
+                    "max_page": ""
                 }
 
             },
@@ -16,42 +16,76 @@
                     "get_elements_number": "",
                     "id": ""
                 }
-
+            },
+            "submissions_per_page": {
+                "url": "",
+                "page_one_url": "",
+                "js": {
+                    "get_elements_number": "",
+                    "id": "",
+                    "name": "",
+                    "time": "",
+                    "solved": ""
+                }
+            },
+            "code":{
+                "url": "",
+                "js":{
+                    "lines_number": "",
+                    "line": "",
+                    "extension": ""
+                }
+            }
+        },
+        "codeforces": {
+            "username": "FedericoS",
+            "max_page": {
+                "url": "https://codeforces.com/submissions/__username__",
+                "js":{
+                    "max_page": "return $(\".page-index\").last().text()!=\"\" ? $(\".page-index\").last().text() : \"1\""
+                }
+            },
+            "solved_problems": {
+                "url": "",
+                "js":{
+                    "get_elements_number": "",
+                    "id": ""
+                }
             },
             "submissions_per_page": {
                 "url": "https://codeforces.com/submissions/__username__/page/__page_id__",
                 "page_one_url": "https://codeforces.com/submissions/__username__",
                 "js": {
-                    "get_elements_number": "$(\".id-cell\").length",
-                    "id": "$(\".id-cell\").eq(__element__).children().eq(0).attr(\"href\")",
-                    "name": "$(\"[data-submission-id]\").eq(__element__).children().eq(3).children().eq(0).attr(\"href\").replace(\"/contest/\",\"\").replace(\"/problem/\",\"\")",
-                    "time": "(new Date($(\"[data-submission-id]\").eq(__element__).children().eq(1).text().split(\"UTC\")[0].trim())).getTime()",
-                    "solved": "$(\".status-verdict-cell\").eq(__element__).text().trim() == \"Accepted\""
+                    "get_elements_number": "return $(\".id-cell\").length",
+                    "id": "return $(\"[data-submission-id]\").eq(0).children().eq(3).children().eq(0).attr(\"href\").split(\"/problem\")[0]+\"/submission/\"+$(\".id-cell\").eq(0).children().eq(0).text()",
+                    "name": "return $(\"[data-submission-id]\").eq(__element__).children().eq(3).children().eq(0).attr(\"href\").replace(\"/contest/\",\"\").replace(\"/problem/\",\"\")",
+                    "time": "return (new Date($(\"[data-submission-id]\").eq(__element__).children().eq(1).text().split(\"UTC\")[0].trim())).getTime()",
+                    "solved": "return $(\".status-verdict-cell\").eq(__element__).text().trim() == \"Accepted\""
                 }
             },
             "code":{
                 "url": "https://codeforces.com__problem_id__",
                 "js":{
-                    "lines_number": "$(\"#program-source-text\").find(\"li\").length",
-                    "line": "$(\"#program-source-text\").find(\"li\").eq(__element__).text()",
-                    "extension": "\".cpp\""
+                    "lines_number": "return $(\"#program-source-text\").find(\"li\").length",
+                    "line": "return $(\"#program-source-text\").find(\"li\").eq(__element__).text()",
+                    "extension": "return \".cpp\""
                 }
             }
         },
         "codechef": {
-            "username": "federico_s",
+            "username": "",
             "max_page": {
                 "url": "",
                 "js":{
-                    "max_page": "1"
+                    "max_page": "return 1"
                 }
 
             },
             "solved_problems": {
                 "url": "https://www.codechef.com/users/__username__",
                 "js":{
-                    "get_elements_number": "$(\"h5\").eq(0).text().slice(14,-1)",
-                    "id": "$(\"article\").eq(0).children().children().children().eq(__element__).attr(\"href\")"
+                    "get_elements_number": "return $(\"h5\").eq(0).text().slice(14,-1)",
+                    "id": "return $(\"article\").eq(0).children().children().children().eq(__element__).attr(\"href\")"
                 }
 
             },
@@ -59,19 +93,19 @@
                 "url": "https://www.codechef.com__page_id__",
                 "page_one_url": "",
                 "js": {
-                    "get_elements_number": "$(\"tbody\").eq(2).children().length",
-                    "id": "$(\"tbody\").eq(2).children().eq(__element__).children().eq(0).text()",
-                    "name": "$(\"h2\").eq(1).children().eq(1).text()",
-                    "time": "0",
-                    "solved": "$(\"tbody\").eq(2).children().eq(__element__).children().eq(3).children().eq(0).children().eq(0).attr(\"src\") == \"/misc/tick-icon.gif\""
+                    "get_elements_number": "return $(\"tbody\").eq(2).children().length",
+                    "id": "return $(\"tbody\").eq(2).children().eq(__element__).children().eq(0).text()",
+                    "name": "return $(\"h2\").eq(1).children().eq(1).text()",
+                    "time": "return 0",
+                    "solved": "return $(\"tbody\").eq(2).children().eq(__element__).children().eq(3).children().eq(0).children().eq(0).attr(\"src\") == \"/misc/tick-icon.gif\""
                 }
             },
             "code":{
                 "url": "https://www.codechef.com/viewsolution/__problem_id__",
                 "js":{
-                    "lines_number": "$(\".ace_line\").length",
-                    "line": "$(\".ace_line\").eq(__element__).text()",
-                    "extension": "\".cpp\""
+                    "lines_number": "return $(\".ace_line\").length",
+                    "line": "return $(\".ace_line\").eq(__element__).text()",
+                    "extension": "return \".cpp\""
                 }
             }
         }
