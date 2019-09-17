@@ -6,149 +6,152 @@ from selenium.webdriver.firefox.options import Options
 
 SLEEP_TIME = 3
 
-f = open('data.json', 'r')
-data = json.loads(f.read())
-f.close()
-
 options = Options()
 options.headless = True
 driver = {}
 
-def close_all():
-    global drive
+def close_driver():
 
-    for url in driver:
-        driver[url].close()
-    driver.clear()
+    for i in driver:
+        driver[i].close()
+    driver.clear() #closes web driver
 
-    print("closed all")
-
-def limit_browsers():
-
-    if len(driver) >3:
-        close_all()
-
-def get_elements(url, js):
+def js_run(url, js):
 
     if url not in driver:
-        if len(driver):
-            close_all()
+        close_driver()
         driver[url] = webdriver.Firefox(options=options)
         driver[url].get(url)
-        print("downloaded "+url)
+        print("Downloaded: "+url)
 
     try:
         return driver[url].execute_script(js)
     except:
-        print("exception")
-        close_all()
+        print("Attempt failed, trying again...")
+        close_driver()
         time.sleep(SLEEP_TIME)
-        return get_elements(url, js)
+        return js_run(url, js) #runs javascript code on an url
 
-def max_page(params, username):
-    if params["url"]:
-        url = params["url"].replace("__username__", username)
-        return get_elements(url, params["js"]["max_page"]) #gets the number of pages
+def params_replace(str, params):
+
+    for p in params:
+        str = str.replace(p, params[p])
+    return str
+
+def max_page(data, username):
+    if data["max_page"]["url"]:
+        url = params_replace(data["max_page"]["url"],{"cpd__username": username})
+        return js_run(url, data["max_page"]["js"]["max_page"])
     else:
-        return "1"
+        return "1" #returns the number of pages
 
-def submissions_per_page(params, username, page_id):
+def solved_problems(data, username):
 
-    if params["page_one_url"] and page_id == "1":
-        url = params["page_one_url"].replace("__username__", username)
-    else:
-        url = params["url"].replace("__username__", username).replace("__page_id__", page_id)
-
-    js = params["js"]
+    url = params_replace(data["solved_problems"]["url"],{"cpd__username": username})
+    js = data["solved_problems"]["js"]
     v = []
-    elements_number = int(get_elements(url, js["get_elements_number"]))
+    elements_number = int(js_run(url, js["get_elements_number"]))
+
+    for i in range(elements_number):
+        v.append(js_run(url, params_replace(js["id"],{"cpd__element": str(i)})))
+
+    return v #returns solved problem
+
+def submissions_per_page(data, username, page_id):
+
+    if data["submissions_per_page"]["page_one_url"] and page_id == "1":
+        url = params_replace(data["submissions_per_page"]["page_one_url"],{"cpd__username": username})
+    else:
+        url = params_replace(data["submissions_per_page"]["url"],{"cpd__username": username, "cpd__page_id": page_id})
+
+    js = data["submissions_per_page"]["js"]
+    v = []
+    elements_number = int(js_run(url, js["get_elements_number"]))
 
     for i in range(elements_number):
 
         v.append({\
-            "id": get_elements(url, js["id"].replace("__element__", str(i))),\
-            "name": get_elements(url, js["name"].replace("__element__", str(i))),\
-            "time": get_elements(url, js["time"].replace("__element__", str(i))),\
-            "solved": get_elements(url, js["solved"].replace("__element__", str(i)))\
+            "id": js_run(url, params_replace(js["id"],{"cpd__element": str(i)})),\
+            "name": js_run(url, params_replace(js["name"],{"cpd__element": str(i)})),\
+            "time": js_run(url, params_replace(js["time"],{"cpd__element": str(i)})),\
+            "solved": js_run(url, params_replace(js["solved"],{"cpd__element": str(i)})),\
         })
 
-    return v #gets id, time, solved of all the submissions on a page
+    return v #returns submissions on a page
 
-def solved_problems(params, username):
+def all_submissions(data, username, max_page):
 
-    url = params["url"].replace("__username__", username)
-    js = params["js"]
-    v = []
-    elements_number = int(get_elements(url, js["get_elements_number"]))
-
-    for i in range(elements_number):
-        v.append(get_elements(url, js["id"].replace("__element__", str(i))))
-
-    return v #gets ids of solved problem
-
-def all_submissions(params, username, max_page):
-
-    if source["solved_problems"]["url"]:
-        page_ids = solved_problems(source["solved_problems"], username)
+    if data["solved_problems"]["url"]:
+        page_ids = solved_problems(data, username)
     else:
         page_ids = range(1, int(max_page)+1)
 
-    params=source["submissions_per_page"]
     v = []
     for page_id in page_ids:
-        v.extend(submissions_per_page(params, username, str(page_id)))
-    return v
+        v.extend(submissions_per_page(data, username, str(page_id)))
+    return v #returns all the submissions
 
-def good_submissions(submissions):
-
-    for x in submissions:
-        print(x)
+def good_submissions(data, username):
 
     taken = {}
     v = []
+    submissions = all_submissions(data, username, max_page(data, username))
+
     for s in submissions:
         if s["solved"] and s["name"] not in taken:
             taken[s["name"]] = True
             v.append(s)
 
-    return v
+    return v #chooses the submissions
 
-def code(params, problem, username):
+def code(data, problem, username):
 
-    url = params["url"].replace("__problem_id__", problem["id"]).replace("__username__", username)
-    js = params["js"]
-    lines_number = int(get_elements(url, js["lines_number"]))
+    url = params_replace(data["code"]["url"],{"cpd__problem_id": problem["id"], "cpd__username": username})
+    js = data["code"]["js"]
+    lines_number = int(js_run(url, js["lines_number"]))
     code_lines = []
 
     for i in range(lines_number):
-        code_lines.append(get_elements(url, js["line"].replace("__element__", str(i))))
+        code_lines.append(js_run(url, params_replace(js["line"],{"cpd__element": str(i)})))
 
     return {\
-        "name": problem["name"]+get_elements(url, js["extension"]),\
+        "name": problem["name"]+js_run(url, js["extension"]),\
         "code": ("\n").join(code_lines)\
-    }
+        } #returns the code of the solution
 
-def all_codes(params, problems, folder):
+def all_codes(data, folder):
 
     folder = os.path.expanduser(folder)
     if not os.path.exists(folder):
         os.mkdir(folder)
 
-    for p in problems:
-        x = code(params, p, username)
-        file = open(folder+"/"+x["name"], "w")
-        file.write(x["code"])
+    submissions = good_submissions(data, username)
+
+    for s in submissions:
+        submission_data = code(data, s, username)
+        file = open(folder+"/"+submission_data["name"], "w")
+        file.write(submission_data["code"])
         file.close()
 
-    close_all()
+    close_driver() #saves the code of all the solutions
 
-for source_name in data["sources"]:
+#main function
 
-    source = data["sources"][source_name]
-    username = source["username"]
-    folder = data["folder"]
+f = open('data.json', 'r')
+json_file = json.loads(f.read())
+f.close()
+
+for source_name in json_file["sources"]:
+    if source_name != "TEMPLATE":
+        print(source_name+": "+json_file["sources"][source_name]["username"])
+
+for source_name in json_file["sources"]:
+
+    data = json_file["sources"][source_name]
+    username = data["username"]
+    folder = json_file["folder"]
 
     if username == "":
         continue
 
-    all_codes(source["code"], good_submissions(all_submissions(source, username, max_page(source["max_page"], username))), folder+source_name)
+    all_codes(data, folder+source_name)

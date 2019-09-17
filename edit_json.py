@@ -102,27 +102,6 @@ while True:
 
     save_data()
 
-
-#TODO
-#   controlla siti
-#   pagina web
-
-#   nome_funzione (funzioni precedenti necessarie) [info da cercare su data.json]
-
-#funzioni che serve fare:
-
-#   _username [username]
-#   max_page (_username) [link, javascript]
-#   submissions_per_page (_username) [page_number, link, javascript]
-#   solved_problems
-#   submissions (max_page, submissions_per_page) []
-
-#a questo punto ho tutte le submissions (id, tempo, problema) (l'id contiene il sito e il problem id)
-
-#   submission_id (submissions) []
-
-#   get_code (submission_id) [link, javascript]
-
 #INSTALLATION
 #   download https://github.com/mozilla/geckodriver/releases/download/v0.25.0/geckodriver-v0.25.0-linux64.tar.gz to bin
 #   tar -zxvf geckodriver-v0.25.0-linux64.tar.gz
@@ -139,10 +118,3 @@ while True:
 #acm.timus.ru
 #onlinejudge.org
 #judge.u-aizu.ac.jp
-
-## TODO:
-# cooler prints
-
-# pass data always as functions' parameter
-# cooler replace function
-# remove close_all

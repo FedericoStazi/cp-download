@@ -40,7 +40,7 @@
         "codeforces": {
             "username": "FedericoS",
             "max_page": {
-                "url": "https://codeforces.com/submissions/__username__",
+                "url": "https://codeforces.com/submissions/cpd__username",
                 "js":{
                     "max_page": "return $(\".page-index\").last().text()!=\"\" ? $(\".page-index\").last().text() : \"1\""
                 }
@@ -53,27 +53,27 @@
                 }
             },
             "submissions_per_page": {
-                "url": "https://codeforces.com/submissions/__username__/page/__page_id__",
-                "page_one_url": "https://codeforces.com/submissions/__username__",
+                "url": "https://codeforces.com/submissions/cpd__username/page/cpd__page_id",
+                "page_one_url": "https://codeforces.com/submissions/cpd__username",
                 "js": {
                     "get_elements_number": "return $(\".id-cell\").length",
-                    "id": "return $(\"[data-submission-id]\").eq(0).children().eq(3).children().eq(0).attr(\"href\").split(\"/problem\")[0]+\"/submission/\"+$(\".id-cell\").eq(0).children().eq(0).text()",
-                    "name": "return $(\"[data-submission-id]\").eq(__element__).children().eq(3).children().eq(0).attr(\"href\").replace(\"/contest/\",\"\").replace(\"/problem/\",\"\")",
-                    "time": "return (new Date($(\"[data-submission-id]\").eq(__element__).children().eq(1).text().split(\"UTC\")[0].trim())).getTime()",
-                    "solved": "return $(\".status-verdict-cell\").eq(__element__).text().trim() == \"Accepted\""
+                    "id": "return $(\"[data-submission-id]\").eq(cpd__element).children().eq(3).children().eq(0).attr(\"href\").split(\"/problem\")[0]+\"/submission/\"+$(\".id-cell\").eq(cpd__element).children().eq(0).text()",
+                    "name": "return $(\"[data-submission-id]\").eq(cpd__element).children().eq(3).children().eq(0).attr(\"href\").replace(\"/contest/\",\"\").replace(\"/problem/\",\"\")",
+                    "time": "return (new Date($(\"[data-submission-id]\").eq(cpd__element).children().eq(1).text().split(\"UTC\")[0].trim())).getTime()",
+                    "solved": "return $(\".status-verdict-cell\").eq(cpd__element).text().trim() == \"Accepted\""
                 }
             },
             "code":{
-                "url": "https://codeforces.com__problem_id__",
+                "url": "https://codeforces.comcpd__problem_id",
                 "js":{
                     "lines_number": "return $(\"#program-source-text\").find(\"li\").length",
-                    "line": "return $(\"#program-source-text\").find(\"li\").eq(__element__).text()",
+                    "line": "return $(\"#program-source-text\").find(\"li\").eq(cpd__element).text()",
                     "extension": "return \".cpp\""
                 }
             }
         },
         "codechef": {
-            "username": "",
+            "username": "federico_s",
             "max_page": {
                 "url": "",
                 "js":{
@@ -82,29 +82,29 @@
 
             },
             "solved_problems": {
-                "url": "https://www.codechef.com/users/__username__",
+                "url": "https://www.codechef.com/users/cpd__username",
                 "js":{
                     "get_elements_number": "return $(\"h5\").eq(0).text().slice(14,-1)",
-                    "id": "return $(\"article\").eq(0).children().children().children().eq(__element__).attr(\"href\")"
+                    "id": "return $(\"article\").eq(0).children().children().children().eq(cpd__element).attr(\"href\")"
                 }
 
             },
             "submissions_per_page": {
-                "url": "https://www.codechef.com__page_id__",
+                "url": "https://www.codechef.comcpd__page_id",
                 "page_one_url": "",
                 "js": {
                     "get_elements_number": "return $(\"tbody\").eq(2).children().length",
-                    "id": "return $(\"tbody\").eq(2).children().eq(__element__).children().eq(0).text()",
+                    "id": "return $(\"tbody\").eq(2).children().eq(cpd__element).children().eq(0).text()",
                     "name": "return $(\"h2\").eq(1).children().eq(1).text()",
                     "time": "return 0",
-                    "solved": "return $(\"tbody\").eq(2).children().eq(__element__).children().eq(3).children().eq(0).children().eq(0).attr(\"src\") == \"/misc/tick-icon.gif\""
+                    "solved": "return $(\"tbody\").eq(2).children().eq(cpd__element).children().eq(3).children().eq(0).children().eq(0).attr(\"src\") == \"/misc/tick-icon.gif\""
                 }
             },
             "code":{
-                "url": "https://www.codechef.com/viewsolution/__problem_id__",
+                "url": "https://www.codechef.com/viewsolution/cpd__problem_id",
                 "js":{
                     "lines_number": "return $(\".ace_line\").length",
-                    "line": "return $(\".ace_line\").eq(__element__).text()",
+                    "line": "return $(\".ace_line\").eq(cpd__element).text()",
                     "extension": "return \".cpp\""
                 }
             }
