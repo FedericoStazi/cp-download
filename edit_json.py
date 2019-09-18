@@ -103,14 +103,14 @@ while True:
     save_data()
 
 #INSTALLATION
-#   download https://github.com/mozilla/geckodriver/releases/download/v0.25.0/geckodriver-v0.25.0-linux64.tar.gz to bin
-#   tar -zxvf geckodriver-v0.25.0-linux64.tar.gz
+#   sudo apt-get install python3
+#   wget https://github.com/mozilla/geckodriver/releases/download/v0.25.0/geckodriver-v0.25.0-linux64.tar.gz
+#   tar -C /usr/bin -zxvf geckodriver-v0.25.0-linux64.tar.gz
 #   pip3 install selenium
 
 #WEBSITES
 
 #codeforces
-
 #codechef
 #oj.uz
 #sphere
