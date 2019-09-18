@@ -121,10 +121,6 @@ def code(data, problem, username):
 
 def all_codes(data, folder):
 
-    folder = os.path.expanduser(folder)
-    if not os.path.exists(folder):
-        os.mkdir(folder)
-
     submissions = good_submissions(data, username)
 
     for s in submissions:
@@ -138,20 +134,32 @@ def all_codes(data, folder):
 #main function
 
 f = open('data.json', 'r')
-json_file = json.loads(f.read())
+data_json = json.loads(f.read())
 f.close()
 
-for source_name in json_file["sources"]:
-    if source_name != "TEMPLATE":
-        print(source_name+": "+json_file["sources"][source_name]["username"])
+f = open('user.json', 'r')
+user_json = json.loads(f.read())
+f.close()
 
-for source_name in json_file["sources"]:
+data_json["folder"] = user_json["folder"].rstrip("/")
+print("Saving files in "+data_json["folder"])
 
-    data = json_file["sources"][source_name]
-    username = data["username"]
-    folder = json_file["folder"]
+data_json["folder"] = os.path.expanduser(data_json["folder"])
+if not os.path.exists(data_json["folder"]):
+    os.mkdir(data_json["folder"])
 
-    if username == "":
+for source_name in data_json["sources"]:
+    if source_name in user_json:
+        data_json["sources"][source_name]["username"] = user_json[source_name]
+        print(source_name+": "+data_json["sources"][source_name]["username"])
+
+for source_name in data_json["sources"]:
+
+    if "username" not in data_json["sources"][source_name]:
         continue
+
+    data = data_json["sources"][source_name]
+    username = data["username"]
+    folder = data_json["folder"]
 
     all_codes(data, folder+source_name)

@@ -1,8 +1,6 @@
 {
-    "folder": "~/Projects/competitive-programming/",
     "sources": {
         "TEMPLATE": {
-            "username": "",
             "max_page": {
                 "url": "",
                 "js":{
@@ -38,7 +36,6 @@
             }
         },
         "codeforces": {
-            "username": "FedericoS",
             "max_page": {
                 "url": "https://codeforces.com/submissions/cpd__username",
                 "js":{
@@ -73,7 +70,6 @@
             }
         },
         "codechef": {
-            "username": "federico_s",
             "max_page": {
                 "url": "",
                 "js":{

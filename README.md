@@ -31,6 +31,12 @@ scipt structure
 
 json structure
 
+## Future features
+
+- adding missing websites
+- fixing codechef time
+- adding feature that stops the script from downloading already downloaded files
+
 ## Contributing
 
 ## Author
