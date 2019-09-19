@@ -67,4 +67,4 @@ If you successfully add a website that isn't in the list, please make a pull req
 
 ## Author
 
-Stazi Federico
+* **Federico Stazi** - [FedericoStazi](https://github.com/FedericoStazi)
