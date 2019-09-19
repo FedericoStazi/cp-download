@@ -42,14 +42,18 @@ The user.json file contains your informations. Next to the *folder* field you sh
 
 ```
 {
+    "folder": "~/competitive-programming/",
+    "codeforces": "FedericoS",
+    "codechef": "federico_s",
+    ...
 
 ```
 
 ## Adding websites
 
-scipt structure
+If you want to download submissions from a website that isn't in the list, you can add it in the user.json file and in the data.json file. Here's a brief description of how the script works, which will allow you to download submissions from other websites.
 
-json structure
+**TODO**
 
 ## Future features
 
@@ -59,4 +63,8 @@ json structure
 
 ## Contributing
 
+If you successfully add a website that isn't in the list, please make a pull request!
+
 ## Author
+
+Stazi Federico
