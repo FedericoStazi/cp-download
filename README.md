@@ -56,14 +56,14 @@ If you want to download submissions from a website that isn't in the list, you c
 In the *data.json* file, *sources* contains an entry for each competitive programming website. This is the structure of a sample entry:
 
 * ##### max_page
-      If the submissions of a user or are listed in multiple pages, *max_page* gets the number of pages.
-      If 
-  * ##### url
+   If the submissions of a user or are listed in multiple pages, *max_page* gets the number of pages.
+   If 
+   * ##### url
       The url where the maximum page can be found.
    * ##### url
       This entry contains the javascript functions that get the value you are looking for from the page.
-   * ##### max_page
-      Returns the max page. If all the submissions are on a page, just write "return 1"
+      * ##### max_page
+         Returns the max page. If all the submissions are on a page, just write "return 1"
       
 #TODO
 
