@@ -53,7 +53,48 @@ The user.json file contains your informations. Next to the *folder* field you sh
 
 If you want to download submissions from a website that isn't in the list, you can add it in the user.json file and in the data.json file. Here's a brief description of how the script works, which will allow you to download submissions from other websites.
 
-**TODO**
+In the *data.json* file, *sources* contains an entry for each competitive programming website. This is the structure of a sample entry:
+
+   #### max_page
+      If the submissions of a user or are listed in multiple pages, *max_page* gets the number of pages.
+      If 
+   ##### url
+      The url where the maximum page can be found.
+   ##### js
+      This entry contains the javascript functions that get the value you are looking for from the page.
+   ###### max_page
+      Returns the max page. If all the submissions are on a page, just write "return 1"
+      
+#TODO
+
+            },
+            "solved_problems": {
+                "url": "",
+                "js":{
+                    "get_elements_number": "",
+                    "id": ""
+                }
+            },
+            "submissions_per_page": {
+                "url": "",
+                "page_one_url": "",
+                "js": {
+                    "get_elements_number": "",
+                    "id": "",
+                    "name": "",
+                    "time": "",
+                    "solved": ""
+                }
+            },
+            "code":{
+                "url": "",
+                "js":{
+                    "lines_number": "",
+                    "line": "",
+                    "extension": ""
+                }
+            }
+        },
 
 ## Future features
 
