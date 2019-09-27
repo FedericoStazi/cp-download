@@ -58,7 +58,6 @@ If you want to download submissions from a website that isn't in the list, you c
 ## Future features
 
 - adding missing websites
-- fixing codechef time
 - adding feature that stops the script from downloading already downloaded files
 
 ## Contributing
