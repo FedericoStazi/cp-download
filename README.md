@@ -1,22 +1,8 @@
 # cp-download
 Scipt used to automatically download a user's submissions to the most famous competitive programming websites.
+To do so, it downloads webpages and uses javascript to get the data needed.
+The script is user-friendly if the user only wants to download submissions from supported websites, but allows the user to download submissions from other websites as well, even though this procedure is more complex and requires the usage of JavaScript.
 
-## Installing
-
-This script is written using *Python 3.6* and needs the *Selenium* library.
-
-```
-   sudo apt-get install python3
-   pip3 install selenium
-```
-
-Selenium needs *Geckodriver 0.25.0* to run an headless Firefox browser
-
-```
-   wget https://github.com/mozilla/geckodriver/releases/download/v0.25.0/geckodriver-v0.25.0-linux64.tar.gz
-   tar -C /usr/bin -zxvf geckodriver-v0.25.0-linux64.tar.gz
-   
-```
 ## Websites
 
 These are the websites supported by cp-download:
@@ -35,6 +21,22 @@ These are the websites supported by cp-download:
 - onlinejudge.org
 - judge.u-aizu.ac.jp
 
+## Installing
+
+This script is written using *Python 3.6* and needs the *Selenium* library.
+
+```
+   sudo apt-get install python3
+   pip3 install selenium
+```
+
+Selenium needs *Geckodriver 0.25.0* to run an headless Firefox browser
+
+```
+   wget https://github.com/mozilla/geckodriver/releases/download/v0.25.0/geckodriver-v0.25.0-linux64.tar.gz
+   tar -C /usr/bin -zxvf geckodriver-v0.25.0-linux64.tar.gz
+   
+```
 
 ## Simple usage
 
@@ -58,13 +60,19 @@ python3 script.py
 
 **Be careful! If you only want to download your submissions, you do NOT have to read this section. You should read it only if you are interested in how the script works or if you want to add a website that is not currently included**
 
-TODO general description (maybe in its own section)
+The main idea behind this script is that these websites have similar structures, and therefore the procedure to download files is similar in all of them, the only things that change are the urls of the pages and the JavaScript codes.
 
 If you want to download submissions from a website that isn't in the list, you can add it in the user.json file and in the data.json file. Here's a brief description of how the script works, which will allow you to download submissions from other websites.
 
-TODO TYPES
+There are two types of websites supported:
+- *Type A*: all the submissions are listed on a unique list (which may be split in multiple pages) (e.g. *codeforces*)
+- *Type B*: all the solved are listed on a unique list, and each problem has its own submissions list (e.g. *codechef*)
 
-TODO KEYWORDS
+The following keywords can be included in the urls or JavaScript codes:
+- *_element*
+- *-username*
+- *_page_number*
+- ...
 
 In the *data.json* file, *sources* contains an entry for each competitive programming website. This is the structure of a sample entry:
 
