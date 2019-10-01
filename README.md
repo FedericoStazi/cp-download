@@ -69,10 +69,11 @@ There are two types of websites supported:
 - *Type B*: all the solved are listed on a unique list, and each problem has its own submissions list (e.g. *codechef*)
 
 The following keywords can be included in the urls or JavaScript codes:
-- *_element*
-- *-username*
-- *_page_number*
-- ...
+- *cpd_username* The username
+- *cpd_page_id* The id of the current page
+- *cpd_problem_id* The id of the current problem
+- *cpd_element* When multiple elements should be returned, *cpd_element* is the index of the element
+
 
 In the *data.json* file, *sources* contains an entry for each competitive programming website. This is the structure of a sample entry:
 
@@ -100,7 +101,7 @@ In the *data.json* file, *sources* contains an entry for each competitive progra
          Gets the id of the *__element*-th problem.
          
 * ##### submissions_per_page
-   This part gets all the submission's ids on a page. ...
+   This part gets all the submission's ids on a page. 
    * ##### url
       The url where the ids of the submissions can be found. Use *__page_number* in the url if there are multiple pages. 
    * ##### page_one_url
